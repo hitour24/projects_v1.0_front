@@ -1,5 +1,6 @@
 import { mdiMinusThick } from "@mdi/js";
 export default {
+    testVar: 1,
     loadingStartEdit: false,
     currentIdProject: null,
     itemsSub: [],
@@ -82,7 +83,7 @@ export default {
                     addTempItemIcon: 'mdi-plus-thick',
                     model: null,//{ name: { title: 'Имя', model: '', required: true, }, sername: { title: 'Фамилия', model: '', required: true, }, secondname: { title: 'Отчество', model: '', }, contacts: { title: 'Контакты', model: '', }, id_project: { title: 'Проект', model: '', disabled: true }, id: { title: 'Проект', model: '', disabled: true } },
                     //get value() { return `${this.model.name.model}${this.model.sername.model ? ' ' + this.model.sername.model : ''}` },
-                    required: true,
+                    required: false,
                     block: '2',
                     member: true,
                     itemText: (e) => `${e.name} ${e.sername}`,
@@ -100,7 +101,7 @@ export default {
                     addTempItemIcon: 'mdi-plus-thick',
                     model: null,//{ name: { title: 'Имя', model: '', required: true, }, sername: { title: 'Фамилия', model: '', required: true, }, secondname: { title: 'Отчество', model: '', }, contacts: { title: 'Контакты', model: '', }, id_project: { title: 'Проект', model: '', disabled: true }, id: { title: 'Проект', model: '', disabled: true } },
                     // get value() { return `${this.model.name.model}${this.model.sername.model ? ' ' + this.model.sername.model : ''}` },
-                    required: true,
+                    required: false,
                     block: '2',
                     member: true,
                     itemText: (e) => `${e.name} ${e.sername}`,

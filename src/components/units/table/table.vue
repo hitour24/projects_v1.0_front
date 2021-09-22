@@ -16,23 +16,54 @@
       :show-select="dataTable.multi"
       :show-expand="expandable ? true : false"
     >
-      <!-- <template v-slot:[`item.active`]="{ item }">
-        <v-chip :color="item.active ? 'success' : 'orange'" dark>
-          {{ item.active ? "Вкл." : "Выкл." }}
-        </v-chip>
-      </template> -->
-      <!-- <template v-slot:header="{ props: { headers } }">
-                <thead>
-                  <tr>
-            
-                    <th :colspan="headers.length">
-                      <v-col class="pa-0 ma-0">
-                        Всего записей - <b>{{ infoReport.amount }}</b></v-col
-                      >
-                    </th>
-                  </tr>
-                </thead>
-              </template> -->
+      <template v-slot:[`item.title`]="{ item }">
+        <div class="more_text">
+          <read-more
+            v-if="item.title"
+            :maxChars="50"
+            more-str="Читать"
+            less-str="Скрыть"
+            :text="item.title"
+            link="javascript:return false;"
+          ></read-more>
+        </div>
+      </template>
+      <template v-slot:[`item.description`]="{ item }">
+        <div class="more_text">
+          <read-more
+            v-if="item.description"
+            :maxChars="50"
+            more-str="Читать"
+            less-str="Скрыть"
+            :text="item.description"
+            link="javascript:return false;"
+          ></read-more>
+        </div>
+      </template>
+      <template v-slot:[`item.project`]="{ item }">
+        <div class="more_text">
+          <read-more
+            v-if="item.project"
+            :maxChars="50"
+            more-str="Читать"
+            less-str="Скрыть"
+            :text="item.project"
+            link="javascript:return false;"
+          ></read-more>
+        </div>
+      </template>
+      <template v-slot:[`item.parent`]="{ item }">
+        <div class="more_text">
+          <read-more
+            v-if="item.parent"
+            :maxChars="50"
+            more-str="Читать"
+            less-str="Скрыть"
+            :text="item.parent"
+            link="javascript:return false;"
+          ></read-more>
+        </div>
+      </template>
 
       <template v-if="chips" v-slot:[chips.slot]="{ item }">
         <v-chip
@@ -495,6 +526,7 @@ export default {
       dialogHelpTooltip: commonVal.dialogHelpTooltip,
       helpTooltip: commonVal.helpTooltip,
       tempSubItems: commonVal.tempSubItems,
+      isHidden: false,
       ...tableVal,
     };
   },
@@ -506,7 +538,25 @@ export default {
       this.removeRaw = null;
     },
   },
+  // created() {
+  //   document.getElementById("show_more").addEventListener("click", () => {
+  //     this.isHidden = !this.isHidden;
+  //     computeState();
+  //   });
+  // },
   methods: {
+    showMOre(v) {
+      console.log(v);
+    },
+    // computeState() {
+    //   if (this.isHidden) {
+    //     desc.innerHTML =
+    //       text.split("", 240).join("").toLowerCase().padEnd(243, ".") +
+    //       "<span id='show_more'>Показать весь</span>";
+    //   } else {
+    //     desc.innerHTML = text + "<span id='show_more'>Показать меньше</span>";
+    //   }
+    // },
     remove() {
       this.$emit("remove", this.removeRaw);
     },
@@ -546,3 +596,34 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.trunscate_vertikal {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* width: 100%;
+  line-height: 1.2em;
+  height: 3.6em;
+  background-color: #363636;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; */
+}
+/* .trunscate_vertikal::after {
+  content: "Показать больше";
+  color: "blue";
+  position: relative;
+} */
+::v-deep .more_text p {
+  margin: 0;
+}
+
+::v-deep .more_text span a {
+  text-decoration: none !important;
+}
+</style>
+

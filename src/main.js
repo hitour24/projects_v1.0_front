@@ -17,6 +17,8 @@ import './plugins/vue-axios';
 import './plugins/vue-auth';
 
 import './plugins/helper';
+
+import ReadMore from "vue-read-more";
 // import './plugins/report';
 
 // Vue.prototype.$func = func
@@ -30,6 +32,7 @@ Vue.use(Toast, options);
 Vue.use(VueRouter);
 Vue.use(VueTheMask);
 Vue.use(VueAuth);
+Vue.use(ReadMore);
 
 
 

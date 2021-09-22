@@ -127,7 +127,7 @@ export default {
     itemClasses: (item) => ({
       "yellow lighten-4": item.parent,
       "red lighten-4": item.status === "архив",
-      nowrap: true,
+      // nowrap: true,
     }),
 
     /**
@@ -338,5 +338,23 @@ export default {
 <style scoped>
 ::v-deep .nowrap {
   white-space: nowrap !important;
+}
+
+::v-deep .sortable span:nth-child(3) {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  color: rgba(0, 0, 0, 0);
+}
+::v-deep .sortable span:nth-child(3)::before {
+  content: "";
+  left: 0;
+  top: 0;
+  width: 15px;
+  position: absolute;
+  height: 15px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAMKADAAQAAAABAAAAMAAAAADbN2wMAAAD/ElEQVRoBe2YWahOURTHDRkzT2Wey1CmFOLFCw8ImYWQUB6k5EEpyoPywoMXMkse8GLI9GDKFEqkRNc8ZZ7n4fevu2rd3Rmue797vq98q36d/957nbPXHs46+/uqVStacQb+7xmonufhN6X/4dAJakIJnIYXUNDWkug2wTf4E/Cd8i5oBwVpA4jqGYSBh2WtwtC0EWS9hToQ0FVoXhqYVmA7nAMNYCDMgsYgeweD4JYKhWAHCcJm+hq6a0RQ2l6nnJ90QVhvorDgtYWS9ngj2u86/8HoSKsRWVs1lWPdY9ehH7lyKN9Tsd5VjnG6jMxyAD1cz2ecjpPHXUNPp8vILAdQx/X8xek4qXRqVtdEeM1yAI9d572cjpPKWGZPTOTzOo/O7SV+gE5L4bud/2x0zqw+TxoGk2AcdIYk0/Ivhw9gA9B1GcTZTBp+g/xeg30XkBW3jty6BT6BD0RaOX0ahDaBihII/a2s40Q3d1N3tOp+gfkscu0VlqO5U19Fe2jcdS8+9UBZ40jgrxndAQowvF/Hhs8R9ZupS9tquCTbcJr9oesj5W2gbbEGdDTwAd2h/DOou0h5CJgtQUQFbM9RltLzKx289vt9sAcfRreF0KZQEbW19LJOhahAWlO/As6CMpQyjc5Eq6A95MQW8hQL/gJa2yPOFtBgvtouK0ETkFc7Ru8WlN8CcUHddv7945xyWZ/2IetT2pnOJlqBNNvpHOxeV5V7mTaABqVd2v5Oi0CZyiyT7ZM2gOel0TTl2sgiS7i2cW1KjXk3bQl7B+amRFOXdqVY+esl7gB5t5FEYAN4je6SENFW56t7wtwfd6t+XvaFftAizqky9ce52QbxCK3zT033QH3+94D5+KtWYheEv760daeDBikfu0f6MswB3wfFips+OPq6Wie6voRLcA/Cr+4G6m6A91cSWANKCs3AT4r38/oMfq0gJ6av70nwHYRap82ZIKsFi+EteD+tYElQd5PyNtgK18D7ayIaQk5Myz4eDsAbUEff4TqshqjZUt1G+AU+MGmtYtRv3RHUP3X+m9BVYv+S5/sTwXmwQWivqy7OetKgFZW/tmhS8qA5G5tPNzaAg+XoUqtq/kvj/LUtsjKlSbO1JhKu+11b7GplOQBlH7NnJhKuT1xbc6fLyCwH8Mr1rKyWZv7bEXssyXIAV1zEk5yOk5Ndgz5uebcWRGCnWqXfoQkR6X35DHqJv0HOfqHxrEqZzyzveNIM8D83pSeCtptloHXogrHaRHISLDhdH4Iyzl64B75Nx5V6UFCm89A+8IFG6UP4NCmoyINgRlE+CtrjNoAf6BMwHsplfv+V64YqcNIPoTagWPT3ylcoWnEGijPwv8zAX6b6TqcNnAg+AAAAAElFTkSuQmCC")
+    no-repeat;
+  background-size: cover;
 }
 </style>

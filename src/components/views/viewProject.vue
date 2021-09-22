@@ -217,30 +217,92 @@
                           <v-icon>{{ icons.minus }}</v-icon>
                         </v-btn>
 
-                        <v-list-item-icon class="mr-3">
+                        <v-list-item-icon class="mr-3 my-2">
                           {{ item.hierarchy }}
                         </v-list-item-icon>
                         <v-list-item-content class="py-1">
                           <v-list-item-title>
-                            <v-text-field
-                              placeholder="Название"
-                              style="
-                                color: rgba(0, 0, 0, 1) !important;
-                                font-weight: 700 !important;
-                                font-size: 14px !important;
-                              "
-                              light
-                              :readonly="mode !== 'edit'"
-                              :disabled="mode !== 'edit'"
-                              dense
-                              flat
-                              hide-details="auto"
-                              :rules="[rules.required]"
-                              v-model="item.title"
-                            ></v-text-field>
+                            <v-row dense>
+                              <v-col cols="12" sm="4">
+                                <v-text-field
+                                  placeholder="Название"
+                                  style="
+                                    color: rgba(0, 0, 0, 1) !important;
+                                    font-weight: 700 !important;
+                                    font-size: 14px !important;
+                                  "
+                                  lisght
+                                  :solo="mode === 'edit'"
+                                  :solo-inverted="mode !== 'edit'"
+                                  :readonly="mode !== 'edit'"
+                                  :disabled="mode !== 'edit'"
+                                  dense
+                                  flat
+                                  hide-details="auto"
+                                  :rules="[rules.required]"
+                                  v-model="item.title"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col
+                                cols="12"
+                                sm="8"
+                                style="position: relative"
+                              >
+                                <v-textarea
+                                  placeholder="Описание"
+                                  style="font-size: 14px !important"
+                                  dense
+                                  rows="1"
+                                  auto-grow
+                                  light
+                                  :solo="mode === 'edit'"
+                                  :solo-inverted="mode !== 'edit'"
+                                  :readonly="mode !== 'edit'"
+                                  :disabled="mode !== 'edit'"
+                                  :append-outer-icon="
+                                    (unitForm.name === 'products_0' ||
+                                      unitForm.name === 'products_1' ||
+                                      unitForm.name === 'products_2' ||
+                                      unitForm.name === 'products_3' ||
+                                      unitForm.name === 'products_4' ||
+                                      unitForm.name === 'products_5') &&
+                                    mode === 'edit'
+                                      ? 'mdi-chevron-down'
+                                      : ''
+                                  "
+                                  @click:append-outer="
+                                    () => {
+                                      item.accom = item.accom == 0 ? 1 : 0;
+                                      unitForm.data = unitForm.data.filter(
+                                        (f) => !f.remove
+                                      );
+                                      openModeAddit(item);
+                                    }
+                                  "
+                                  flat
+                                  hide-details="auto"
+                                  v-model="item.description"
+                                ></v-textarea>
+                                <!-- <v-btn
+                                  class="addnal-button"
+                                  v-if="
+                                    (unitForm.name === 'products_0' ||
+                                      unitForm.name === 'products_1' ||
+                                      unitForm.name === 'products_2' ||
+                                      unitForm.name === 'products_3' ||
+                                      unitForm.name === 'products_4' ||
+                                      unitForm.name === 'products_5') &&
+                                    mode === 'edit'
+                                  "
+                                  icon
+                                  small
+                                  ><v-icon>mdi-chevron-down</v-icon></v-btn
+                                > -->
+                              </v-col>
+                            </v-row>
                           </v-list-item-title>
                           <v-list-item-subtitle>
-                            <v-textarea
+                            <!-- <v-textarea
                               placeholder="Описание"
                               style="font-size: 14px !important"
                               dense
@@ -252,8 +314,7 @@
                               flat
                               hide-details="auto"
                               v-model="item.description"
-                              :rules="[rules.required]"
-                            ></v-textarea>
+                            ></v-textarea> -->
                             <!-- Выбор родительского пункта -->
                             <v-autocomplete
                               @change="generateHierarchy"
@@ -296,32 +357,11 @@
                               "
                             ></v-autocomplete>
                             <!-- Ссылка на финальный продукт -->
-                            <v-text-field
-                              v-if="
-                                (unitForm.name === 'products_0' ||
-                                  unitForm.name === 'products_1' ||
-                                  unitForm.name === 'products_2' ||
-                                  unitForm.name === 'products_3' ||
-                                  unitForm.name === 'products_4' ||
-                                  unitForm.name === 'products_5') &&
-                                mode === 'edit'
-                              "
-                              placeholder="Ссылка на финальный продукт"
-                              style="
-                                color: rgba(0, 0, 0, 1);
-                                font-weight: 700 !important;
-                                font-size: 14px !important;
-                              "
-                              light
-                              :readonly="mode !== 'edit'"
-                              :disabled="mode !== 'edit'"
-                              dense
+
+                            <v-expansion-panels
+                              v-model="item.accom"
+                              class="mt-2"
                               flat
-                              hide-details="auto"
-                              v-model="item.finished_product"
-                            ></v-text-field>
-                            <!-- Дата добавления -->
-                            <div
                               v-if="
                                 (unitForm.name === 'products_0' ||
                                   unitForm.name === 'products_1' ||
@@ -332,32 +372,13 @@
                                 mode === 'edit'
                               "
                             >
-                              <v-menu
-                                v-for="dateProduct in [
-                                  {
-                                    title: 'Дата добавления',
-                                    name: 'date_create',
-                                  },
-                                  {
-                                    title: 'Дата завершения (приемки)',
-                                    name: 'date_completion',
-                                  },
-                                  {
-                                    title: 'Дата исключения, заморозки',
-                                    name: 'date_frozen',
-                                  },
-                                ]"
-                                :key="dateProduct.name"
-                                :close-on-content-click="true"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
+                              <v-expansion-panel>
+                                <!-- <v-expansion-panel-header>
+                                  Дополнительно
+                                </v-expansion-panel-header> -->
+                                <v-expansion-panel-content>
                                   <v-text-field
-                                    class="pt-0"
-                                    v-model="item[dateProduct.name]"
-                                    prepend-inner-icon="mdi-calendar"
+                                    placeholder="Ссылка на финальный продукт"
                                     style="
                                       color: rgba(0, 0, 0, 1);
                                       font-weight: 700 !important;
@@ -368,27 +389,73 @@
                                     :disabled="mode !== 'edit'"
                                     dense
                                     flat
-                                    :placeholder="dateProduct.title"
-                                    v-bind="attrs"
                                     hide-details="auto"
-                                    v-on="on"
+                                    v-model="item.finished_product"
                                   ></v-text-field>
-                                </template>
+                                  <!-- Дата добавления -->
+                                  <div>
+                                    <v-menu
+                                      v-for="dateProduct in [
+                                        {
+                                          title: 'Дата добавления',
+                                          name: 'date_create',
+                                        },
+                                        {
+                                          title: 'Дата завершения (приемки)',
+                                          name: 'date_completion',
+                                        },
+                                        {
+                                          title: 'Дата исключения, заморозки',
+                                          name: 'date_frozen',
+                                        },
+                                      ]"
+                                      :key="dateProduct.name"
+                                      :close-on-content-click="true"
+                                      transition="scale-transition"
+                                      offset-y
+                                      min-width="auto"
+                                    >
+                                      <template
+                                        v-slot:activator="{ on, attrs }"
+                                      >
+                                        <v-text-field
+                                          class="pt-0"
+                                          v-model="item[dateProduct.name]"
+                                          prepend-inner-icon="mdi-calendar"
+                                          style="
+                                            color: rgba(0, 0, 0, 1);
+                                            font-weight: 700 !important;
+                                            font-size: 14px !important;
+                                          "
+                                          light
+                                          :readonly="mode !== 'edit'"
+                                          :disabled="mode !== 'edit'"
+                                          dense
+                                          flat
+                                          :placeholder="dateProduct.title"
+                                          v-bind="attrs"
+                                          hide-details="auto"
+                                          v-on="on"
+                                        ></v-text-field>
+                                      </template>
 
-                                <v-date-picker
-                                  no-title
-                                  v-model="item[dateProduct.name]"
-                                ></v-date-picker>
-                              </v-menu>
-                            </div>
+                                      <v-date-picker
+                                        no-title
+                                        v-model="item[dateProduct.name]"
+                                      ></v-date-picker>
+                                    </v-menu>
+                                  </div>
+                                </v-expansion-panel-content>
+                              </v-expansion-panel>
+                            </v-expansion-panels>
                           </v-list-item-subtitle>
                         </v-list-item-content>
                       </v-list-item>
 
-                      <v-divider
+                      <!-- <v-divider
                         :key="index + 1000 / 25"
                         v-if="index < unitForm.data.length - 1"
-                      ></v-divider>
+                      ></v-divider> -->
                     </template>
 
                     <!-- </template> -->
@@ -717,12 +784,14 @@ export default {
   },
   async mounted() {
     // this.formProject = this.formProject.map((m) => m);
-    this.initFormProject();
+
     if (this.$route.query.id === "new") {
       this.mode = "edit";
       this.generateHierarchy();
     }
     await this.loadExtra();
+    this.initFormProject();
+
     if (this.$route.query.id && this.$route.query.id !== "new") {
       this.currentIdProject = Number(this.$route.query.id);
       this.formProject[0].model = this.currentIdProject;
@@ -732,6 +801,9 @@ export default {
   },
   methods: {
     ...сcatalogs,
+    openModeAddit(v) {
+      console.log(v);
+    },
     permission() {
       if (this.$route.query.id !== "new") {
         let currentProjectEdit = this.$auth
@@ -740,9 +812,9 @@ export default {
         currentProjectEdit = currentProjectEdit
           ? currentProjectEdit.edit
           : false;
-        // if (this.$auth.roles() === "admin") {
-        //   currentProjectEdit = true;
-        // }
+        if (this.$auth.roles() === "admin") {
+          currentProjectEdit = true;
+        }
         return currentProjectEdit;
       } else return false;
     },
@@ -773,14 +845,14 @@ export default {
         );
         membersAll.model = [];
 
-        membersAll.model = Helper.unique(
-          members.data
-            .filter((f) => f.roleProject === "member")
-            .reduce((acc, el) => {
-              return acc.concat(el.model);
-            }, []),
-          "id"
-        );
+        // membersAll.model = Helper.unique(
+        //   members.data
+        //     .filter((f) => f.roleProject === "member")
+        //     .reduce((acc, el) => {
+        //       return acc.concat(el.model);
+        //     }, []),
+        //   "id"
+        // );
 
         console.log(
           members.data
@@ -797,6 +869,17 @@ export default {
         if (fec.name === "common_date") {
           fec.data[0].model =
             this.$route.query.id === "new" ? Helper.getToday() : null;
+        }
+        if (fec.name === "common") {
+          const idStatusProject = fec.data.find(
+            (_f) => _f.name === "id_status_project"
+          );
+          idStatusProject.model =
+            this.$route.query.id === "new"
+              ? idStatusProject.items.find(
+                  (_fn) => _fn.title.toLowerCase() === "планирование"
+                ).id
+              : null;
         }
       });
     },
@@ -872,11 +955,11 @@ export default {
               } else {
                 mMembers.model = modelMember;
                 //добавляем в массив модели всех учатников над проектом аналитика и разработчика
-                if (
-                  ["analyst", "developer"].includes(mMembers.project_worker)
-                ) {
-                  m.data[m.data.length - 1].model.push(modelMember);
-                }
+                // if (
+                //   ["analyst", "developer"].includes(mMembers.project_worker)
+                // ) {
+                //   m.data[m.data.length - 1].model.push(modelMember);
+                // }
               }
               return mMembers;
             });
@@ -1022,39 +1105,47 @@ export default {
             if (el.name === "members") {
               data = el.data.reduce((acc1, el1) => {
                 const d = el1.model;
-                let memb = !Array.isArray(d)
-                  ? {
-                      roleProject: el1.roleProject,
-                      project_worker: el1.project_worker,
-                      id_user: d.id,
-                      id_project: this.currentIdProject,
-                      id_role_project: el.extra.roles_project.find(
-                        (_fr) => _fr.name === el1.roleProject
-                      ).id,
-                      ...d,
-                    }
-                  : d.map((_sm) => {
-                      return {
+                console.log(d);
+                let memb =
+                  !Array.isArray(d) && d
+                    ? {
                         roleProject: el1.roleProject,
                         project_worker: el1.project_worker,
-                        id_user: _sm.id,
+                        id_user: d.id,
                         id_project: this.currentIdProject,
                         id_role_project: el.extra.roles_project.find(
                           (_fr) => _fr.name === el1.roleProject
                         ).id,
-                        ..._sm,
-                      };
-                    });
+                        ...d,
+                      }
+                    : d &&
+                      d
+                        .filter((f) => f)
+                        .map((_sm) => {
+                          console.log(_sm);
+                          return {
+                            roleProject: el1.roleProject,
+                            project_worker: el1.project_worker,
+                            id_user: _sm.id,
+                            id_project: this.currentIdProject,
+                            id_role_project: el.extra.roles_project.find(
+                              (_fr) => _fr.name === el1.roleProject
+                            ).id,
+                            ..._sm,
+                          };
+                        });
                 return acc1.concat(memb);
               }, []);
               //   console.log(data);
               //делаем учатсников уникальными заисклчением руковоителя поекта
               data = data
-                .filter((_fpm) => _fpm.roleProject === "project_manager")
+                .filter(
+                  (_fpm) => _fpm && _fpm.roleProject === "project_manager"
+                )
                 .concat(
                   Helper.unique(
                     data.filter(
-                      (_fpm) => _fpm.roleProject !== "project_manager"
+                      (_fpm) => _fpm && _fpm.roleProject !== "project_manager"
                     ),
                     "id_user"
                   )
@@ -1126,6 +1217,7 @@ export default {
         title: "",
         description: "",
         priority: 1,
+        // accom: 1,
         id_project: null,
       });
       setTimeout(() => {
@@ -1315,14 +1407,17 @@ export default {
       console.log(this.formProject);
     },
   },
-  // watch: {
-  //   formProject: {
-  //     handler() {
-  //       this.prepareFormProject();
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  watch: {
+    testVar(v) {
+      console.log(v);
+    },
+    // formProject: {
+    //   handler() {
+    //     this.prepareFormProject();
+    //   },
+    //   deep: true,
+    // },
+  },
 };
 </script>
 
@@ -1390,5 +1485,21 @@ export default {
 ::v-deep .v-application .error--text {
   color: #ff5252 !important;
   caret-color: #ff5252 !important;
+}
+.addnal-button {
+  position: absolute;
+  right: 0;
+  top: 15px;
+}
+
+::v-deep .v-expansion-panels {
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  z-index: 0;
 }
 </style>

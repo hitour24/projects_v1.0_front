@@ -1,3 +1,5 @@
+// import { mdiFormatListGroup } from '@mdi/js';
+
 export default {
     // dialogAddItem: false,
     // dialogRemove: false,
@@ -5,4 +7,5 @@ export default {
     removeRaw: null,
     itemsSub: [],
     multiSelected: [],
+    // iconGrop: mdiFormatListGroup
 }
