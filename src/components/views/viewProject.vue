@@ -52,51 +52,70 @@
                     v-if="unitForm.type === 'head_select'"
                   >
                     <v-col cols="12" md="9">
-                      <v-text-field
-                        :rules="[rules.required]"
-                        v-if="$route.query.id && $route.query.id === 'new'"
-                        class="head_big_font"
-                        background-color="light-green accent-3"
-                        flat
-                        solo
-                        hide-no-data
-                        placeholder="Название проекта"
-                        hide-details
-                        v-model="unitForm.model"
-                      >
-                      </v-text-field>
+                      <v-row dense>
+                        <v-col cols="12" md="2">
+                          <v-text-field
+                            :readonly="mode !== 'edit'"
+                            :rules="[rules.required]"
+                            hide-details
+                            hide-no-data
+                            class="head_big_font"
+                            background-color="grey lighten-5"
+                            solo
+                            placeholder="ID проекта"
+                            flat
+                            v-model="unitForm.data.model"
+                          >
+                          </v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="10">
+                          <v-text-field
+                            :rules="[rules.required]"
+                            v-if="$route.query.id && $route.query.id === 'new'"
+                            class="head_big_font"
+                            background-color="light-green accent-3"
+                            flat
+                            solo
+                            hide-no-data
+                            placeholder="Название проекта"
+                            hide-details
+                            v-model="unitForm.model"
+                          >
+                          </v-text-field>
 
-                      <v-text-field
-                        :rules="[rules.required]"
-                        v-else-if="mode === 'edit'"
-                        class="head_big_font"
-                        background-color="light-green accent-3"
-                        flat
-                        solo
-                        hide-no-data
-                        placeholder="Название проекта"
-                        hide-details
-                        v-model="unitForm.text"
-                      >
-                      </v-text-field>
+                          <v-text-field
+                            :rules="[rules.required]"
+                            v-else-if="mode === 'edit'"
+                            class="head_big_font"
+                            background-color="light-green accent-3"
+                            flat
+                            solo
+                            hide-no-data
+                            placeholder="Название проекта"
+                            hide-details
+                            v-model="unitForm.text"
+                          >
+                          </v-text-field>
 
-                      <v-autocomplete
-                        v-else
-                        @change="getDataProject"
-                        class="head_big_font"
-                        background-color="light-green accent-3"
-                        flat
-                        solo
-                        hide-no-data
-                        hide-details
-                        :loading="loadSubCatalog"
-                        :disabled="mode === 'edit'"
-                        :items="allProjects"
-                        v-model="unitForm.model"
-                        item-text="title"
-                        item-value="id"
-                      >
-                      </v-autocomplete>
+                          <v-autocomplete
+                            v-else
+                            @change="getDataProject"
+                            class="head_big_font"
+                            background-color="light-green accent-3"
+                            flat
+                            solo
+                            hide-no-data
+                            hide-details
+                            :loading="loadSubCatalog"
+                            :disabled="mode === 'edit'"
+                            :items="allProjects"
+                            v-model="unitForm.model"
+                            item-text="title"
+                            item-value="id"
+                          >
+                          </v-autocomplete>
+                        </v-col>
+                      </v-row>
                     </v-col>
                     <v-col cols="12" md>
                       <v-btn
@@ -179,7 +198,12 @@
                     "
                   >
                     <v-btn
-                      v-if="mode === 'edit'"
+                      v-if="
+                        mode === 'edit' &&
+                        (unitForm.name === 'solutions_0'
+                          ? !unitForm.data.find((fd) => !fd.remove)
+                          : 1 === 1)
+                      "
                       fab
                       color="primary"
                       class="control_button"
@@ -225,7 +249,11 @@
                             <v-row dense>
                               <v-col cols="12" sm="4">
                                 <v-text-field
-                                  placeholder="Название"
+                                  :placeholder="
+                                    unitForm.name === 'solutions_0'
+                                      ? 'Варианты решения проблемы'
+                                      : 'Название'
+                                  "
                                   style="
                                     color: rgba(0, 0, 0, 1) !important;
                                     font-weight: 700 !important;
@@ -249,7 +277,11 @@
                                 style="position: relative"
                               >
                                 <v-textarea
-                                  placeholder="Описание"
+                                  :placeholder="
+                                    unitForm.name === 'solutions_0'
+                                      ? 'Обоснуйте свой выбор стратегии решения проблемы'
+                                      : 'Описание'
+                                  "
                                   style="font-size: 14px !important"
                                   dense
                                   rows="1"
@@ -966,6 +998,7 @@ export default {
           }
           if (m.name === "title" && m.type === "head_select") {
             m.text = fullDataProject[m.name];
+            m.data.model = fullDataProject.id_custom;
           }
           if (["common", "common_bool", "common_date"].includes(m.name)) {
             m.data = m.data.map((mCommon) => {
@@ -973,7 +1006,17 @@ export default {
               return mCommon;
             });
           }
-
+          if (m.type === "list" && m.name.startsWith("solutions")) {
+            m.data = [];
+            if (
+              fullDataProject.solution_options ||
+              fullDataProject.rationale_option
+            )
+              m.data.push({
+                title: fullDataProject.solution_options,
+                description: fullDataProject.rationale_option,
+              });
+          }
           if (m.type === "list" && m.name.startsWith("objectives")) {
             if (fullDataProject.objectives) {
               m.data = fullDataProject.objectives.filter(
@@ -1095,8 +1138,11 @@ export default {
                 el.name === "common_bool" ||
                 el.name === "common_date"
                 ? el.data
+                : el.type === "head_select" && el.name === "title"
+                ? [el, el.data]
                 : el
             );
+            console.log(d);
             return d;
           }, [])
           .reduce((acc, el) => {
@@ -1159,6 +1205,14 @@ export default {
             ) {
               data = el.text; //this.allProjects.find((fff) => fff.id === el.model).title;
             }
+            if (el.name.startsWith("solutions") && el.type === "list") {
+              data = el.data.filter((_fs) => !_fs.remove);
+              // if (key === "solution_options") {
+              //   const solutions = el.data.find((fs)=>!fs.remove);
+              //   if (solutions)
+              //   el.data.title;
+              // }
+            }
             if (
               (el.name.startsWith("objectives") ||
                 el.name.startsWith("products")) &&
@@ -1173,7 +1227,22 @@ export default {
               },
             };
           }, {});
+
+        //Проблемы + враианты решения
+        prepareFormProject.solution_options = null;
+        prepareFormProject.rationale_option = null;
+        if (
+          prepareFormProject.solutions_0 &&
+          prepareFormProject.solutions_0.length
+        ) {
+          prepareFormProject.solution_options =
+            prepareFormProject.solutions_0[0].title;
+          prepareFormProject.rationale_option =
+            prepareFormProject.solutions_0[0].description;
+        }
+
         console.log(prepareFormProject);
+
         this.loadSubCatalog = true;
         //Присваиваем id создателя проекта
         prepareFormProject.creator = this.$auth.user();

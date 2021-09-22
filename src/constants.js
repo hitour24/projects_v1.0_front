@@ -1,9 +1,9 @@
-//export const HOST = "http://37.140.199.251:3000/";
+
 
 // export const HOST = "http://localhost:3000/";
 export const HOST = 'http://37.143.12.185:3000/'
 
-//export const HOST = "http://135.181.201.117:3111/";
+
 
 // export const GET_DETAIL_REPORT = 'api/report/detail';
 export const POST_CATALOGS = 'api/entity/';

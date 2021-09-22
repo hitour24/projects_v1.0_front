@@ -41,6 +41,10 @@ export default {
             model: null,
             items: [],
             block: '12',
+            data: {
+                name: 'id_custom',
+                model: null,
+            }
         },
         {
             type: 'textarea',
@@ -337,6 +341,19 @@ export default {
             type: 'list',
             hierarchy: 4,
             start_sub_hierarchy: 1,
+            color: 'green lighten-5',
+            name: 'solutions_0',
+            name_types: '',
+            extra: {},
+            block: '12',
+            description: 'Варианты решения проблемы. Обоснуйте свой выбор стратегии решения проблемы',
+            edit: true,
+            data: []
+        },
+        {
+            type: 'list',
+            hierarchy: 5,
+            start_sub_hierarchy: 1,
             color: 'blue lighten-5',
             name: 'products_0',
             name_types: '',
@@ -354,7 +371,7 @@ export default {
         },
         {
             type: 'list',
-            hierarchy: 5,
+            hierarchy: 6,
             start_sub_hierarchy: 1,
             color: 'grey lighten-5',
             name: 'products_1',
@@ -389,7 +406,7 @@ export default {
 
         {
             type: 'list',
-            hierarchy: 6,
+            hierarchy: 7,
             start_sub_hierarchy: 1,
             color: 'yellow lighten-4',
             name: 'objectives_2',
@@ -424,7 +441,7 @@ export default {
 
         {
             type: 'list',
-            hierarchy: 7,
+            hierarchy: 8,
             start_sub_hierarchy: 1,
             color: 'deep-purple lighten-5',
             name: 'objectives_3',
@@ -494,7 +511,7 @@ export default {
 
         {
             type: 'list',
-            hierarchy: 8,
+            hierarchy: 9,
             start_sub_hierarchy: 1,
             color: 'light-blue lighten-5',
             name: 'objectives_5',
