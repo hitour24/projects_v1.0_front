@@ -143,7 +143,7 @@ export default {
                 {
                     type: 'text',
                     name: 'pbs',
-                    title: 'Иерархия продуктов (PBS)',
+                    title: 'Рабочая папка проекта',
                     model: '',
                     block: '2'
                 },

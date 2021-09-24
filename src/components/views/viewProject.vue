@@ -1615,5 +1615,6 @@ export default {
 ::v-deep .v-textarea textarea {
   line-height: 1.3;
   font-family: Arial;
+  color: rgba(0, 0, 0, 1) !important;
 }
 </style>
