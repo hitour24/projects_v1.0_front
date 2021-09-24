@@ -59,7 +59,7 @@ export default {
                     model: null,
                     items: [],
                     filter: false,
-                    required: true,
+                    required: false,
                 },
                 {
                     type: "select",

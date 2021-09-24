@@ -154,8 +154,8 @@ export default {
               return m.items.find((f) => {
                 let fullNameItem = f[m.itemText];
 
-                // if (m.name === "id_place")
-                //   fullNameItem = `${f.name} - ${f.region}`;
+                if (m.name === "id_project")
+                  fullNameItem = `${f.id_custom} - ${f.title}`;
                 // if (m.name === "id_group")
                 //   fullNameItem = `${f.name} ${f.performance}`;
                 // if (m.name === "id_client")

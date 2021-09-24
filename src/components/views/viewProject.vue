@@ -185,7 +185,7 @@
                   </v-textarea>
 
                   <v-list
-                    class="py-1"
+                    class="py-1 h-100"
                     v-if="unitForm.type === 'list'"
                     append
                     flat
@@ -200,7 +200,9 @@
                     <v-btn
                       v-if="
                         mode === 'edit' &&
-                        (unitForm.name === 'solutions_0'
+                        (unitForm.name === 'solutions_0' ||
+                        unitForm.name === 'objectives_0' ||
+                        unitForm.name === 'objectives_1'
                           ? !unitForm.data.find((fd) => !fd.remove)
                           : 1 === 1)
                       "
@@ -241,14 +243,22 @@
                           <v-icon>{{ icons.minus }}</v-icon>
                         </v-btn>
 
-                        <v-list-item-icon class="mr-3 my-2">
+                        <v-list-item-icon
+                          :class="`mr-3 my-2 ${
+                            ['objectives_0', 'objectives_1'].includes(
+                              unitForm.name
+                            )
+                              ? 'font-weight-bold'
+                              : ''
+                          }`"
+                        >
                           {{ item.hierarchy }}
                         </v-list-item-icon>
                         <v-list-item-content class="py-1">
                           <v-list-item-title>
                             <v-row dense>
                               <v-col cols="12" sm="4">
-                                <v-text-field
+                                <v-textarea
                                   :placeholder="
                                     unitForm.name === 'solutions_0'
                                       ? 'Варианты решения проблемы'
@@ -256,10 +266,13 @@
                                   "
                                   style="
                                     color: rgba(0, 0, 0, 1) !important;
-                                    font-weight: 700 !important;
                                     font-size: 14px !important;
+                                    line-height: 1.3 !important;
+                                    font-family: arial !important;
                                   "
                                   lisght
+                                  rows="1"
+                                  auto-grow
                                   :solo="mode === 'edit'"
                                   :solo-inverted="mode !== 'edit'"
                                   :readonly="mode !== 'edit'"
@@ -269,7 +282,7 @@
                                   hide-details="auto"
                                   :rules="[rules.required]"
                                   v-model="item.title"
-                                ></v-text-field>
+                                ></v-textarea>
                               </v-col>
                               <v-col
                                 cols="12"
@@ -280,9 +293,16 @@
                                   :placeholder="
                                     unitForm.name === 'solutions_0'
                                       ? 'Обоснуйте свой выбор стратегии решения проблемы'
+                                      : unitForm.name === 'objectives_6'
+                                      ? 'Опишите способ сбора исходных данных для показателя, источники данных. Как вы сможете проверить качество данных?'
                                       : 'Описание'
                                   "
-                                  style="font-size: 14px !important"
+                                  style="
+                                    font-size: 14px !important;
+                                    font-size: 14px !important;
+                                    line-height: 1.3 !important;
+                                    font-family: arial !important;
+                                  "
                                   dense
                                   rows="1"
                                   auto-grow
@@ -299,7 +319,9 @@
                                       unitForm.name === 'products_4' ||
                                       unitForm.name === 'products_5') &&
                                     mode === 'edit'
-                                      ? 'mdi-chevron-down'
+                                      ? item.accom !== 0
+                                        ? 'mdi-chevron-down'
+                                        : 'mdi-chevron-up'
                                       : ''
                                   "
                                   @click:append-outer="
@@ -923,14 +945,15 @@ export default {
       this.loadSubCatalog = true;
       console.log("OK!");
       const blockTypes = {
-        objectives_0: ["Основная решаемая проблема", "Решаемая проблема"],
-        objectives_1: ["Сопутствующая цель"],
-        objectives_2: ["Главный критерий успеха"],
-        objectives_3: ["Критерий успеха"],
-        objectives_4: ["Цель"],
-        objectives_5: ["Условия реализации"],
-        products_0: true,
-        products_1: false,
+        objectives_0: ["Основная решаемая проблема"],
+        objectives_1: ["Основная цель"],
+        objectives_2: ["Решаемая проблема"],
+        objectives_3: ["Цель"],
+        objectives_4: ["Возможность"],
+        objectives_5: ["Спасобность"],
+        objectives_6: ["Критерий успеха"],
+        objectives_7: ["Условия реализации"],
+        products_0: false,
       };
       const fullDataProject = (
         await this.findCatalog("projects", {
@@ -1367,106 +1390,123 @@ export default {
                 currentRaw.extra.statuses_objectives.find(
                   (f) => f.title === "активный"
                 );
-              console.log(
-                currentRaw.name,
-                indexFirst,
-                currentRaw.start_sub_hierarchy,
-                currentListRaw.hierarchy
-              );
-              if (indexFirst + currentRaw.start_sub_hierarchy === 0) {
-                currentListRaw.id_type_objective =
-                  currentRaw.extra.type_objective.find(
-                    (f) => f.title === "Основная решаемая проблема"
-                  );
-              } else {
-                currentListRaw.id_type_objective =
-                  currentRaw.extra.type_objective.find(
-                    (f) => f.title === "Решаемая проблема"
-                  );
-              }
+              console.log(indexFirst);
+              // console.log(
+              //   currentRaw.name,
+              //   indexFirst,
+              //   currentRaw.start_sub_hierarchy,
+              //   currentListRaw.hierarchy
+              // );
+              // if (indexFirst + currentRaw.start_sub_hierarchy === 0) {
+              //   currentListRaw.id_type_objective =
+              //     currentRaw.extra.type_objective.find(
+              //       (f) => f.title === "Основная решаемая проблема"
+              //     );
+              // } else {
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find(
+                  (f) => f.title === "Основная решаемая проблема"
+                );
+              // }
             }
             ///Сопутствующие цели
             if (currentRaw.name === "objectives_1") {
-              currentListRaw.id_type_objective =
-                currentRaw.extra.type_objective.find(
-                  (f) => f.title === "Сопутствующая цель"
-                );
-
               currentListRaw.id_status_objective =
                 currentRaw.extra.statuses_objectives.find(
                   (f) => f.title === "активный"
                 );
+
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find(
+                  (f) => f.title === "Основная цель"
+                );
             }
-            ///Главные продукты
+
+            ///Продукты
             if (currentRaw.name === "products_0") {
-              currentListRaw.main = true;
-
-              if (this.$route.query.id === "new")
-                currentListRaw.date_create = Helper.getToday();
-
               currentListRaw.id_status_product =
                 currentRaw.extra.statuses_products.find(
                   (f) => f.title === "активный"
                 );
-            }
-            ///продукты
-            if (currentRaw.name === "products_1") {
-              if (this.$route.query.id === "new")
+
+              currentListRaw.main = false;
+
+              if (this.$route.query.id === "new" || !currentListRaw.id)
                 currentListRaw.date_create = Helper.getToday();
-
-              currentListRaw.id_status_product =
-                currentRaw.extra.statuses_products.find(
-                  (f) => f.title === "активный"
-                );
             }
 
-            ///Главный критерий успеха.
+            ///Решаемая проблема
             if (currentRaw.name === "objectives_2") {
-              currentListRaw.id_type_objective =
-                currentRaw.extra.type_objective.find(
-                  (f) => f.title === "Главный критерий успеха"
-                );
-
               currentListRaw.id_status_objective =
                 currentRaw.extra.statuses_objectives.find(
                   (f) => f.title === "активный"
                 );
+
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find(
+                  (f) => f.title === "Решаемая проблема"
+                );
             }
 
-            ///Вторичные критерии успеха
+            //Цель
             if (currentRaw.name === "objectives_3") {
+              currentListRaw.id_status_objective =
+                currentRaw.extra.statuses_objectives.find(
+                  (f) => f.title === "активный"
+                );
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find((f) => f.title === "Цель");
+            }
+
+            ///Возможность
+            if (currentRaw.name === "objectives_4") {
+              currentListRaw.id_status_objective =
+                currentRaw.extra.statuses_objectives.find(
+                  (f) => f.title === "активный"
+                );
+
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find(
+                  (f) => f.title === "Возможность"
+                );
+            }
+
+            //Спасобность
+            if (currentRaw.name === "objectives_5") {
+              currentListRaw.id_status_objective =
+                currentRaw.extra.statuses_objectives.find(
+                  (f) => f.title === "активный"
+                );
+
+              currentListRaw.id_type_objective =
+                currentRaw.extra.type_objective.find(
+                  (f) => f.title === "Спасобность"
+                );
+            }
+
+            //Критерий успеха
+            if (currentRaw.name === "objectives_6") {
+              currentListRaw.id_status_objective =
+                currentRaw.extra.statuses_objectives.find(
+                  (f) => f.title === "активный"
+                );
+
               currentListRaw.id_type_objective =
                 currentRaw.extra.type_objective.find(
                   (f) => f.title === "Критерий успеха"
                 );
+            }
 
+            //Условия реализации
+            if (currentRaw.name === "objectives_7") {
               currentListRaw.id_status_objective =
                 currentRaw.extra.statuses_objectives.find(
                   (f) => f.title === "активный"
                 );
-            }
 
-            ///Критерий завершения проекта
-            if (currentRaw.name === "objectives_4") {
-              currentListRaw.id_type_objective =
-                currentRaw.extra.type_objective.find((f) => f.title === "Цель");
-
-              currentListRaw.id_status_objective =
-                currentRaw.extra.statuses_objectives.find(
-                  (f) => f.title === "активный"
-                );
-            }
-
-            //Условия реализации проекта
-            if (currentRaw.name === "objectives_5") {
               currentListRaw.id_type_objective =
                 currentRaw.extra.type_objective.find(
                   (f) => f.title === "Условия реализации"
-                );
-
-              currentListRaw.id_status_objective =
-                currentRaw.extra.statuses_objectives.find(
-                  (f) => f.title === "активный"
                 );
             }
           }
@@ -1570,5 +1610,10 @@ export default {
   padding: 0;
   width: 100%;
   z-index: 0;
+}
+
+::v-deep .v-textarea textarea {
+  line-height: 1.3;
+  font-family: Arial;
 }
 </style>

@@ -269,79 +269,88 @@ export default {
             type: 'list',
             hierarchy: 1,
             start_sub_hierarchy: 0,
-            color: 'red lighten-4',
+            color: 'red lighten-3',
             name: 'objectives_0',
             name_types: '',
             block: '12',
             extra: { type_objective: null, statuses_objectives: null },
-            description: 'Зачем проект инициировали (Обоснование выполнения проекта) - главная проблема, которую решает проект для бизнеса',
+            description: 'Главная проблема, которую решает проект для бизнеса',
             edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Основная проблема',
-                //     description: 'Репутационные сбои из-за перебоев с материалами на объектах, доп.траты на срочные доставки, дорогостоящий большой склад под хранение редкоиспользуемых запасов, расходы на покупку '
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Основная 1',
-                //     description: 'Проблема: Наличие частых ситуаций отсутствия ТМЦ на объектах (в т.ч. критически важных для процесса обслуживания: туалетной бумаги, полотенец, дез.средств), что сказывается на качестве, на '
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Основная 2',
-                //     description: 'Проблема: Наличие частых ситуаций отсутствия ТМЦ на объектах (в т.ч. критически важных для процесса обслуживания: туалетной бумаги, полотенец, дез.средств), что сказывается на качестве, на.  '
-                // }
-            ]
+            data: []
         },
+
+        {
+            type: 'list',
+            hierarchy: 2,
+            start_sub_hierarchy: 0,
+            color: 'yellow lighten-3',
+            name: 'objectives_1',
+            name_types: '',
+            block: '12',
+            extra: { type_objective: null, statuses_objectives: null },
+            description: 'и/или Главная цель проекта',
+            edit: true,
+            data: []
+        },
+
+        {
+            type: 'list',
+            hierarchy: 1,
+            start_sub_hierarchy: 1,
+            color: 'red lighten-4',
+            name: 'objectives_2',
+            name_types: '',
+            block: '12',
+            extra: { type_objective: null, statuses_objectives: null },
+            description: 'Проблемы',
+            edit: true,
+            data: []
+        },
+
         {
             type: 'list',
             hierarchy: 2,
             start_sub_hierarchy: 1,
-            color: 'red lighten-4',
-            name: 'objectives_4',
+            color: 'yellow lighten-4',
+            name: 'objectives_3',
             name_types: '',
             block: '12',
             extra: { type_objective: null, statuses_objectives: null },
-            description: 'Цели проекта',
+            description: 'Цели',
             edit: true,
             data: []
-
         },
         {
             type: 'list',
             hierarchy: 3,
             start_sub_hierarchy: 1,
-            color: 'yellow lighten-4',
-            name: 'objectives_1',
+            color: 'green lighten-5',
+            name: 'objectives_4',
             name_types: '',
             block: '12',
             extra: { type_objective: null, statuses_objectives: null },
-            description: 'Дополнительные проблемы, на решение которых может повлиять реализация вашего проекта',
+            description: 'Возможности',
             edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Сопутствующая проблема 1',
-                //     description: 'Повышение качества обучения менеджеров (они учатся следить за ТМЦ, разбираться в них, планировать) '
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Сопутствующая проблема 2',
-                //     description: 'Выявление дополнительные проблем на объектах и их оперативное решение (к примеру, перерасход химии или недостача по форме) '
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Сопутствующая проблема 3',
-                //     description: 'Улучшение фин планирования для крупных закупок '
-                // }
-            ]
+            data: []
         },
         {
             type: 'list',
             hierarchy: 4,
             start_sub_hierarchy: 1,
-            color: 'green lighten-5',
+            color: 'teal lighten-4',
+            name: 'objectives_5',
+            name_types: '',
+            block: '12',
+            extra: { type_objective: null, statuses_objectives: null },
+            description: 'Способности',
+            edit: true,
+            data: []
+        },
+        {
+            type: 'list',
+            hierarchy: 5,
+            start_sub_hierarchy: 1,
+            color: 'grey lighten-4',
             name: 'solutions_0',
             name_types: '',
             extra: {},
@@ -350,198 +359,47 @@ export default {
             edit: true,
             data: []
         },
+
         {
             type: 'list',
-            hierarchy: 5,
+            hierarchy: 6,
             start_sub_hierarchy: 1,
             color: 'blue lighten-5',
             name: 'products_0',
             name_types: '',
             block: '12',
             extra: { statuses_products: null },
-            description: 'Главный Продукт в результате проекта?',
+            description: 'Продукты',
             edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Главный продукт',
-                //     description: 'Бизнес процесс Управление запасами  '
-                // },
-            ]
-        },
-        {
-            type: 'list',
-            hierarchy: 6,
-            start_sub_hierarchy: 1,
-            color: 'grey lighten-5',
-            name: 'products_1',
-            name_types: '',
-            block: '12',
-            extra: { statuses_products: null },
-            description: 'Основные продукты проекта',
-            edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Основной продукт 1',
-                //     description: 'автоматизированная заявка на расходники;'
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Основной продукт 2',
-                //     description: 'актуальная база ТМЦ по всем объетам;'
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Основной продукт 3',
-                //     description: 'технологические карты;'
-                // },
-                // {
-                //     id: 4,
-                //     title: 'Основной продукт 4',
-                //     description: 'БП "заказ со склада"'
-                // },
-            ]
+            data: []
         },
 
         {
             type: 'list',
             hierarchy: 7,
             start_sub_hierarchy: 1,
-            color: 'yellow lighten-4',
-            name: 'objectives_2',
+            color: 'orange lighten-4',
+            name: 'objectives_6',
             name_types: '',
             block: '12',
             extra: { type_objective: null, statuses_objectives: null },
-            description: 'Главный критерий успеха. Опишите способ сбора исходных данных для показателя, источники данных. Как вы сможете проверить качество данных?',
+            description: 'Критерии успеха. Опишите способ сбора исходных данных для показателя, источники данных. Как вы сможете проверить качество данных?',
             edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Основной продукт 1',
-                //     description: 'автоматизированная заявка на расходники;'
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Основной продукт 2',
-                //     description: 'актуальная база ТМЦ по всем объетам;'
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Основной продукт 3',
-                //     description: 'технологические карты;'
-                // },
-                // {
-                //     id: 4,
-                //     title: 'Основной продукт 4',
-                //     description: 'БП "заказ со склада"'
-                // },
-            ]
+            data: []
         },
 
         {
             type: 'list',
             hierarchy: 8,
             start_sub_hierarchy: 1,
-            color: 'deep-purple lighten-5',
-            name: 'objectives_3',
-            name_types: '',
-            block: '12',
-            extra: { type_objective: null, statuses_objectives: null },
-            description: 'Вторичные критерии успеха',
-            edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Основной продукт 1',
-                //     description: 'автоматизированная заявка на расходники;'
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Основной продукт 2',
-                //     description: 'актуальная база ТМЦ по всем объетам;'
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Основной продукт 3',
-                //     description: 'технологические карты;'
-                // },
-                // {
-                //     id: 4,
-                //     title: 'Основной продукт 4',
-                //     description: 'БП "заказ со склада"'
-                // },
-            ]
-        },
-
-        // {
-        //     type: 'list',
-        //     hierarchy: 7,
-        //     start_sub_hierarchy: 1,
-        //     color: 'red lighten-4',
-        //     name: 'objectives_4',
-        //     name_types: '',
-        //     block: '12',
-        //     extra: { type_objective: null, statuses_objectives: null },
-        //     description: 'Критерий завершения проекта',
-        //     edit: true,
-        //     data: [
-        //         // {
-        //         //     id: 1,
-        //         //     title: 'Основной продукт 1',
-        //         //     description: 'автоматизированная заявка на расходники;'
-        //         // },
-        //         // {
-        //         //     id: 2,
-        //         //     title: 'Основной продукт 2',
-        //         //     description: 'актуальная база ТМЦ по всем объетам;'
-        //         // },
-        //         // {
-        //         //     id: 3,
-        //         //     title: 'Основной продукт 3',
-        //         //     description: 'технологические карты;'
-        //         // },
-        //         // {
-        //         //     id: 4,
-        //         //     title: 'Основной продукт 4',
-        //         //     description: 'БП "заказ со склада"'
-        //         // },
-        //     ]
-        // },
-
-        {
-            type: 'list',
-            hierarchy: 9,
-            start_sub_hierarchy: 1,
             color: 'light-blue lighten-5',
-            name: 'objectives_5',
+            name: 'objectives_7',
             name_types: '',
             block: '12',
             extra: { type_objective: null, statuses_objectives: null },
             description: 'Условия реализации проекта',
             edit: true,
-            data: [
-                // {
-                //     id: 1,
-                //     title: 'Основной продукт 1',
-                //     description: 'автоматизированная заявка на расходники;'
-                // },
-                // {
-                //     id: 2,
-                //     title: 'Основной продукт 2',
-                //     description: 'актуальная база ТМЦ по всем объетам;'
-                // },
-                // {
-                //     id: 3,
-                //     title: 'Основной продукт 3',
-                //     description: 'технологические карты;'
-                // },
-                // {
-                //     id: 4,
-                //     title: 'Основной продукт 4',
-                //     description: 'БП "заказ со склада"'
-                // },
-            ]
+            data: []
         }
 
 

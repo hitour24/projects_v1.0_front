@@ -80,6 +80,7 @@
       <template v-if="expandable" v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-data-table
+          
             v-if="item[expandable.field].length"
             hide-default-footer
             :headers="
@@ -97,6 +98,7 @@
             "
             :items="item[expandable.field]"
           >
+
             <template
               v-if="boolsCheckIcon"
               v-slot:[boolsCheckIcon.slot]="{ item }"

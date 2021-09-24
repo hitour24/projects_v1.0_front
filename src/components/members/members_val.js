@@ -18,7 +18,7 @@ export default {
 
                 {
                     type: "text",
-                    title: "Логин, 'эл. почта",
+                    title: "Логин, эл. почта",
                     name: "login",
                     placeholder: "",
                     model: null,
