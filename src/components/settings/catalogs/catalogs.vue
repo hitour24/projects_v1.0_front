@@ -80,7 +80,7 @@
 import catalogValue from "./params";
 import commonVal from "./../../common_val";
 import catalogs from "./../../../plugins/catalogs";
-import TableUnit from "././/../../units/table/table.vue";
+import TableUnit from "./../../units/table/table.vue";
 export default {
   components: {
     TableUnit,

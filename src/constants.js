@@ -1,7 +1,7 @@
 
 
 // export const HOST = "http://localhost:3000/";
-export const HOST = 'http://37.143.12.185:3000/'
+export const HOST = 'http://37.143.13.92:3000/'
 
 
 
